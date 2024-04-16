@@ -1,0 +1,46 @@
+#### COMPILATION PARAMETERS ####
+OB=.
+
+##CC=icc
+CC=g++
+CFLAGS=-std=gnu++11 -O3 -Wall
+MPIFLAGS=-fopenmp # compile with openMP 
+LDFLAGS=-fopenmp -lstdc++fs # libstdc++fs library for "experimentalfile" in readwrite
+
+CPP=cloning_def.cpp #wp: will use this main for final program compilation
+EXEC=cloning_def.exe 	#wp: name of executable, based on CPP above
+
+MAIN=mainDeform.cpp cloning_def.cpp #files that comtain a 'main' function.
+SRC=$(filter-out $(filter-out $(CPP), $(MAIN)), $(filter-out $(wildcard old*), $(wildcard *.cpp)))	# compile all files but the ones with wrong main() #wp: as marked by the CPP variable
+
+OBJ=$(addprefix $(OB)/, $(SRC:.cpp=.o))
+
+#### COMPILATION ##### #wp: Of final executable file from already compiled .o objects
+#wp: $@ = name of target being generated 'all'
+#wp: $^ names of all prereqs 
+#wp: object exec: objects in exec.o
+$(EXEC): $(OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+#### DEPENDENCIES ####
+
+$(OB)/dat.o: dat.cpp dat.hpp readwrite.hpp
+	$(CC) -o $(OB)/dat.o -c dat.cpp $(CFLAGS)
+
+$(OB)/env.o: env.cpp env.hpp
+	$(CC) -o $(OB)/env.o -c env.cpp $(CFLAGS)
+
+$(OB)/iteration.o: iteration.cpp iteration.hpp particle.hpp
+	$(CC) -o $(OB)/iteration.o -c iteration.cpp $(CFLAGS)
+
+$(OB)/maths.o: maths.cpp maths.hpp
+	$(CC) -o $(OB)/maths.o -c maths.cpp $(CFLAGS)
+
+$(OB)/particle.o: particle.cpp particle.hpp maths.hpp readwrite.hpp
+	$(CC) -o $(OB)/particle.o -c particle.cpp $(CFLAGS)
+
+## compiles the main as an .o object to be joined above by ### COMPILATION ### 
+$(OB)/cloning_def.o: cloning_def.cpp env.hpp iteration.hpp particle.hpp
+	$(CC) -o $(OB)/cloning_def.o -c cloning_def.cpp $(CFLAGS) $(MPIFLAGS)
+
+

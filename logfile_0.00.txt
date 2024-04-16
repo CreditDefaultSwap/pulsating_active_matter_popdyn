@@ -1,0 +1,22 @@
+# compiled with openMP
+# running on 128 threads
+## CloningSerial Code: numClones 1000 runs 1 s 0.00 
+	 With controlled dynamics
+	 tmax 5.000 initSim (relaxation) # 30, tau 200 Delta.t 5.0000e-04
+	 Lx 3.000,Ly 3.000, N particles 11
+	 rho 1.20 , omega 10.0, lambda 0.050, am_phi 0.00
+	 Saving from t_save 0.0000, at nc_i 20, to nc_f 30, with nc_steps 300 
+	 clonesDir: '', loadFile: '', saveFile: 'cloning_0.00.dat'
+#seed safetyFactor 1000
+## master seed 51234
+## Now starting cloning:..........
+	 Doing initial relaxation, with iterations 30 
+	 -- saving at Niter.. 0
+	Finished cloning. Computing final vals and saving.
+
+##bias parameter s: 0
+#SCGF 0
+#<current> 9.79323
+#<current^2> 0.256845
+#am_phi final 0
+##time 9.05801
