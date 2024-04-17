@@ -3,6 +3,7 @@ Population dynamics code for pulsating active matter
 #############################################################
 
 The following is a complete, functioning population dynamics/cloning code exploring the biased ensembles of pulsating active matter.
+Cloning component adapted from https://github.com/yketa/active_work.
 It consists of a c++ program and some interface scripts written in bash. All files required to execute, run and calculate are included.
 
 #############################################################
