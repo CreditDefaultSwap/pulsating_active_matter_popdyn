@@ -1,0 +1,37 @@
+#############################################################
+Population dynamics code for pulsating active matter
+#############################################################
+
+The following is a complete, functioning population dynamics/cloning code exploring the biased ensembles of pulsating active matter.
+It consists of a c++ program and some interface scripts written in bash. All files required to execute, run and calculate are included.
+
+#############################################################
+I. Compiling 
+#############################################################
+
+The c++ code can be easily compiled using (using GNU compilers):
+	make -f make_clone
+and will generate the executable 'cloning_def.exe'
+
+#############################################################
+II. Running the code
+#############################################################
+
+The code may then be ran using the script file `parallel_bias_runs.sh' and 'run_setup.slurm'. The first defines the range of bias to be 
+considered (submitted as independent runs), while the latter specificies pulsating particle dynamic and cloning settings.
+  
+The output will consist of 'log_*.txt', 'cloning_*.dat' and 'g_log_*' files. The first are the result of the cloning simulation; 
+the second is a saved output of the last timestep of the code which may be used to later re-start the simulation (if desired); 
+and the third is the log of the self-adjusting control parameter. Note this latter will be empty if not using controlled simulations.
+
+In addition, all controlled simulations require a calibration curve file as input. This will allow the algorithm to automatically adjust the control
+parameter 'g' for a computed averaged value of the observable <O(s)>_bias given some value of bias, s, such that <O(g)>=<O(s)>_bias, where <.>_bias
+indicates the results from cloning and <.> an unbiased average for a given value of 'g'. 
+Calibration files may be generated with the same code using s=0 and different values of 'g'.
+
+As an example, these output files are included in the folder for a system with density rho=1.2, and size Lx=3,Ly=3 (N=11 particles).  
+Here the system is biased for large values of the global order parameter:
+	phi = 1/N | \sum_j exp(i(\theta_j)) |,
+where \theta_j is the phase of the pulsating particle j. As a control force, a global synchronizing force is considered. 
+The calibration file is already provided as 'amph_curve_L0303_1.2.txt'. Results from a fresh run may be compared with the provided output files using
+the provided run and cloning settings. 
